@@ -4,8 +4,15 @@ import { FaHeart } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import "./Navigation.css"
+import { useSelector } from 'react-redux'
+import { logout } from '../../redux/features/auth/authSlice.js'
+import { useDispatch } from 'react-redux'
+import { useLogoutMutation } from '../../redux/api/usersApiSlice.js'
 
 const Navigation = () => {
+
+    const { userInfo } = useSelector((state) => state.auth)
+
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const [showSidebar, setShowSidebar] = useState(false)
 
@@ -19,6 +26,21 @@ const Navigation = () => {
 
     const closeSidebar = () => {
         setShowSidebar(false)
+    }
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const [logoutApiCall] = useLogoutMutation()
+
+    const handleLogout = async () => {
+        try {
+            await logoutApiCall().unwrap()
+            dispatch(logout())
+            navigate('/login')
+        } catch (error) {
+            console.error('Logout failed:', error)
+        }
     }
 
     return (
@@ -49,6 +71,12 @@ const Navigation = () => {
                     <span className="hidden nav-item-name mt-[3rem]">Favorites</span>{" "}
                 </Link>
 
+            </div>
+
+            <div className="realtive">
+                <button onClick={toggleDropdown} className="flex ittems-center text-grey-8000 focus:outline-none">
+                    {userInfo ? <span className="text-white">{userInfo.username}</span> : (<></>)}
+                </button>
             </div>
 
             <div className="flex flex-col justify-center space-y-4">
