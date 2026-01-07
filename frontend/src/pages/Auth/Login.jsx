@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLoginMutation } from "../../redux/api/usersApiSlice";
 import { setCredentials } from "../../redux/features/auth/authSlice";
 import { toast } from "react-toastify";
+import Loader from "../../components/Loader";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -39,15 +40,15 @@ const Login = () => {
 
     return (
         <div>
-            <section className="pl-[10rem] flex flex-wrap">
-                <div className="mr-[4rem] mt-[5rem]">
+            <section className="h-screen flex overflow-hidden">
+                <div className="mr-[4rem] mt-[5rem] pl-[10rem]">
                     <h1 className="text-2xl font-semibold mb-4">Sign In</h1>
 
                     <form onSubmit={submitHandler} className="container w-[40rem]">
                         <div className="my-[2rem]">
                             <label
                                 htmlFor="email"
-                                className="block text-sm font-medium text-white"
+                                className="block text-sm font-medium text-black"
                             >
                                 Email Address
                             </label>
@@ -55,7 +56,7 @@ const Login = () => {
                                 type="email"
                                 id="email"
                                 className="mt-1 p-2 border rounded w-full"
-                                placeholder="Enter Email"
+                                // placeholder="Enter Email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
@@ -64,7 +65,7 @@ const Login = () => {
                         <div className="mb-4">
                             <label
                                 htmlFor="password"
-                                className="block text-sm font-medium text-white"
+                                className="block text-sm font-medium text-black"
                             >
                                 Password
                             </label>
@@ -72,7 +73,7 @@ const Login = () => {
                                 type="password"
                                 id="password"
                                 className="mt-1 p-2 border rounded w-full"
-                                placeholder="Enter Password"
+                                // placeholder="Enter Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
@@ -86,11 +87,11 @@ const Login = () => {
                             {isLoading ? "Signing In..." : "Sign In"}
                         </button>
 
-                        {isLoading && <p>Loading...</p>}
+                        {isLoading && <Loader />}
                     </form>
 
                     <div className="mt-4">
-                        <p className="text-white">
+                        <p className="text-black">
                             New Customer?{" "}
                             <Link
                                 to={redirect ? `/register?redirect=${redirect}` : "/register"}
@@ -101,6 +102,12 @@ const Login = () => {
                         </p>
                     </div>
                 </div>
+
+                <img
+                    src="https://i.pinimg.com/1200x/5c/55/44/5c55440dcfdd2fb19ffa61fe3d445b0b.jpg"
+                    alt=""
+                    className="h-[90%] w-[45%] mt-[2rem] xl:block md:hidden sm:hidden rounded-lg object-cover"
+                />
             </section>
         </div>
     );
