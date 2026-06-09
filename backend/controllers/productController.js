@@ -12,17 +12,17 @@ const addProducts = asyncHandler(async (req, res) => {
         //validation
         switch(true){
             case !name:
-                return res.json({message:"Name is required"})
+                return res.status(400).json({error:"Name is required"})
             case !brand:
-                return res.json({message:"Brand is required"})
+                return res.status(400).json({error:"Brand is required"})
             case !category:
-                return res.json({message:"Category is required"})
+                return res.status(400).json({error:"Category is required"})
             case !quantity:
-                return res.json({message:"Quantity is required"})
+                return res.status(400).json({error:"Quantity is required"})
             case !description:
-                return res.json({message:"Description is required"})
+                return res.status(400).json({error:"Description is required"})
             case !price:
-                return res.json({message:"Price is required"})
+                return res.status(400).json({error:"Price is required"})
         }
 
         const product = new Product({...req.fields})
@@ -42,17 +42,17 @@ const updateProductDetails = asyncHandler(async (req, res) => {
         //validation
         switch(true){
             case !name:
-                return res.json({message:"Name is required"})
+                return res.status(400).json({error:"Name is required"})
             case !brand:
-                return res.json({message:"Brand is required"})
+                return res.status(400).json({error:"Brand is required"})
             case !category:
-                return res.json({message:"Category is required"})
+                return res.status(400).json({error:"Category is required"})
             case !quantity:
-                return res.json({message:"Quantity is required"})
+                return res.status(400).json({error:"Quantity is required"})
             case !description:
-                return res.json({message:"Description is required"})
+                return res.status(400).json({error:"Description is required"})
             case !price:
-                return res.json({message:"Price is required"})
+                return res.status(400).json({error:"Price is required"})
         }
 
         const product = await Product.findByIdAndUpdate(req.params.id, {...req.fields}, {new:true});
@@ -112,7 +112,7 @@ const fetchProductById = asyncHandler(async( req, res) => {
 
 const fetchAllProducts = asyncHandler(async(req, res) => {
     try {
-        const products = await Product.find({}).populate('category') .limit(12) .sort({createAt: -1});
+        const products = await Product.find({}).populate('category') .limit(12) .sort({createdAt: -1});
         
         res.json(products);
     } catch (error) {
